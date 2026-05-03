@@ -52,6 +52,32 @@ HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
+import urllib.request, json as _json
+from datetime import datetime as _dt
+
+def _send_dotbot_alert(ua):
+    try:
+        payload = _json.dumps({
+            "from": "DotBot Alert <onboarding@resend.dev>",
+            "to": ["thomas.gest8@gmail.com"],
+            "subject": "🤖 DotBot a crawlé moz-test-black.vercel.app",
+            "html": f"<p><strong>DotBot vient de passer !</strong></p>"
+                    f"<p>Heure : {_dt.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC</p>"
+                    f"<p>User-Agent : {ua}</p>"
+                    f"<p>Les 43 liens vers amourdelicorne.com ont été servis.</p>"
+        }).encode()
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=payload,
+            headers={
+                "Authorization": "Bearer re_4SUK7Anc_3487XUhhTKntPhUJfA8vNMuV",
+                "Content-Type": "application/json"
+            }
+        )
+        urllib.request.urlopen(req, timeout=5)
+    except Exception:
+        pass
+
 from http.server import BaseHTTPRequestHandler as _Base
 
 class handler(_Base):
@@ -62,6 +88,7 @@ class handler(_Base):
                 ua = self.headers[key]
                 break
         if 'DotBot' in ua:
+            _send_dotbot_alert(ua)
             body = HTML.encode()
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
