@@ -49,6 +49,13 @@ HTML = """<!DOCTYPE html>
 <head><meta name="robots" content="noindex,nofollow"></head>
 <body>
 """ + "\n".join(f'<a href="{u}"> </a>' for u in LINKS) + """
+<div style="display:none">
+  <h2>Sites partenaires</h2>
+  <p><strong>Pour les futures mariées :</strong> Découvrez <a href="https://colibriditoui.fr" target="_blank" rel="noopener noreferrer">Colibri Dit Oui</a>, notre site partenaire entièrement dédié au mariage et aux robes de mariée.</p>
+  <p><strong>Pour des cadeaux personnalisés :</strong> Trouvez l'inspiration sur <a href="https://cadeauplus.com/" target="_blank" rel="noopener noreferrer">Cadeau Plus</a>, notre site partenaire spécialisé dans les présents uniques pour toutes les occasions et pour tous les destinataires.</p>
+  <p><strong>Votre expert beauté & bien-être :</strong> Explorez <a href="https://www.rvbconcept.fr/" target="_blank" rel="noopener noreferrer">RVB Concept</a>, votre guide de référence pour la médecine esthétique, l'épilation laser et les soins du visage pour révéler votre éclat naturel.</p>
+  <p><strong>Pour les futurs et jeunes parents :</strong> Parcourez <a href="https://majolo.fr/" target="_blank" rel="noopener noreferrer">Majolo</a>, notre partenaire expert qui vous accompagne de la grossesse à l'éducation avec des conseils bienveillants pour une parentalité sereine.</p>
+</div>
 </body>
 </html>"""
 
