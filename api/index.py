@@ -1,5 +1,3 @@
-from http.server import BaseHTTPRequestHandler
-
 LINKS = [
     "https://medium.com/r?url=https://amourdelicorne.com",
     "https://www.bing.com/news/apiclick.aspx?ref=FexRss&url=https://amourdelicorne.com",
@@ -54,14 +52,22 @@ HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
-class handler(BaseHTTPRequestHandler):
+from http.server import BaseHTTPRequestHandler as _Base
+
+class handler(_Base):
     def do_GET(self):
-        ua = self.headers.get('User-Agent', '')
+        ua = ''
+        for key in self.headers:
+            if key.lower() == 'user-agent':
+                ua = self.headers[key]
+                break
         if 'DotBot' in ua:
+            body = HTML.encode()
             self.send_response(200)
-            self.send_header('Content-Type', 'text/html')
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.send_header('Content-Length', str(len(body)))
             self.end_headers()
-            self.wfile.write(HTML.encode())
+            self.wfile.write(body)
         else:
             self.send_response(403)
             self.send_header('Content-Type', 'text/plain')
